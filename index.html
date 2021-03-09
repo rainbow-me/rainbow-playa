@@ -2,7 +2,7 @@
 <head>
   <script src="https://unpkg.com/wavesurfer.js"></script>
   <style>
-      .button label {
+      .playpause label {
         display: block;
         box-sizing: border-box;
         width: 0;
@@ -14,7 +14,7 @@
         border-style: double;
         border-width: 0px 0 0px 60px;
       }
-      .button input[type="checkbox"] {
+      .playpause input[type="checkbox"] {
         position: absolute;
         left: -9999px;
         &:checked + label {
@@ -29,7 +29,7 @@
 </head>
 <body style="background-color: transparent">
   <div id="waveform"></div>
-   <div class="button" id="button">
+   <div class="playpause" id="playpause">
     <input type="checkbox" value="None" id="playpause" name="check" />
     <label for="playpause" tabindex=1></label>
   </div>
@@ -51,7 +51,7 @@
       let playing = false;
       
       document.getElementById('button').addEventListener('click', () => {
-        if(playing) {
+        if(!playing) {
           wavesurfer.play();
         } else {
           wavesurfer.pause();
