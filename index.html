@@ -1,0 +1,16 @@
+<html>
+<head><script src="https://unpkg.com/wavesurfer.js"></script></head>
+<body>
+  <div id="waveform"></div>
+  <script>
+      const wavesurfer = WaveSurfer.create({
+          container: '#waveform',
+          waveColor: 'violet',
+          progressColor: 'purple'
+      });
+      const urlParams = new URLSearchParams(window.location.search);
+      const uri = decodeURIComponent(urlParams.get('url'));
+      wavesurfer.load(uri);
+  </script>
+</body>
+</html>
