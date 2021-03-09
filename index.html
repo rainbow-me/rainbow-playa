@@ -48,6 +48,10 @@
         border-width: 0px 0 0px 60px;
         margin-left: 25px;
       }
+      
+      .pause.android {
+        margin-left: 15px;
+      }
 
       #button-content:focus {
         outline: 0px;
@@ -121,6 +125,8 @@
         height: waveformHeight || 200,
         closeAudioContext: true
     };
+    
+    
         
     const button = document.getElementById('button');
     const buttonContent = document.getElementById('button-content');
@@ -133,7 +139,13 @@
     buttonContent.style.borderColor = `transparent transparent transparent ${buttonColor && ('#' + buttonColor) || 'black'}`;
     currentTimeLabel.style.color = `${textColor && ('#' + textColor) || 'black'}`;
     totalTimeLabel.style.color = `${textColor && ('#' + textColor) || 'black'}`;
-
+    
+    // Platform specfic hacks
+    const ua = navigator.userAgent.toLowerCase();
+    const isAndroid = ua.indexOf("android") > -1;
+    if (isAndroid) {
+       buttonContent.classList.toggle('android');
+    }
 
     const wavesurfer = WaveSurfer.create(options);
     const uri = decodeURIComponent(urlParams.get('url'));
