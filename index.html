@@ -50,7 +50,7 @@
       wavesurfer.load(uri);
       let playing = false;
       
-      document.getElementsByClassName('button').addEventListener('click', () => {
+      document.getElementById('button').addEventListener('click', () => {
         if(!playing) {
           wavesurfer.play();
         } else {
