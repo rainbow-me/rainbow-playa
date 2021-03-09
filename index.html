@@ -29,7 +29,7 @@
 </head>
 <body style="background-color: transparent">
   <div id="waveform"></div>
-   <div class="playpause" id="playpause">
+   <div class="playpause" id="button">
     <input type="checkbox" value="None" id="playpause" name="check" />
     <label for="playpause" tabindex=1></label>
   </div>
@@ -50,7 +50,7 @@
       wavesurfer.load(uri);
       let playing = false;
       
-      document.getElementById('button').addEventListener('click', () => {
+      document.getElementsByClassName('button').addEventListener('click', () => {
         if(!playing) {
           wavesurfer.play();
         } else {
