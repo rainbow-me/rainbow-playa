@@ -47,7 +47,7 @@
       let playing = false;
     
       const button = document.getElementById('button');
-      button.style.borderClor = `transparent transparent transparent ${}`;
+      button.style.borderClor = `transparent transparent transparent ${buttonColor || #202020}`;
       button.addEventListener('click', () => {
         if(!playing) {
           wavesurfer.play();
