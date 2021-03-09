@@ -29,3 +29,7 @@ Params are:
 The player is hosted via github pages, so for changes to take effect, you need to make a PR against `gh-pages` branch.
 
 Once it's merged it should be auto-deployed 
+
+<img width="645" alt="Screen Shot 2021-03-08 at 10 41 05 PM" src="https://user-images.githubusercontent.com/1247834/110416393-a8f8e900-8061-11eb-8af0-265c90ee9cf7.png">
+
+<img width="695" alt="Screen Shot 2021-03-08 at 10 40 07 PM" src="https://user-images.githubusercontent.com/1247834/110416400-abf3d980-8061-11eb-9b1d-8774d5891afa.png">
