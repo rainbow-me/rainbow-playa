@@ -114,12 +114,10 @@
         progressColor: progressColor && `#${progressColor}` || 'purple',
         cursorColor: cursorColor && `#${cursorColor}` || '#fff',
         barWidth: barWidth || 10,
-        waveformHeight: waveformHeight || 120,
+        height: waveformHeight || 120,
         closeAudioContext: true
     };
-    
-    console.log(options);
-    
+        
     const button = document.getElementById('button');
     const buttonContent = document.getElementById('button-content');
     const currentTimeLabel = document.getElementById('current-time');
@@ -139,14 +137,12 @@
     wavesurfer.on('ready', () => {
       console.log('ready!');
       const duration = wavesurfer.getDuration();
-      console.log('duration', duration);
       document.getElementById('total-time').innerText = fancyTimeFormat(duration);
       updateCurrentTime();
     });
     
     const updateCurrentTime = () => {
       const currentTime = wavesurfer.getCurrentTime();
-      console.log('currentTime', currentTime);
       document.getElementById('current-time').innerText = fancyTimeFormat(currentTime);
       setTimeout(updateCurrentTime, 1000);
     }
