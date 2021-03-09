@@ -6,7 +6,7 @@
         box-sizing: border-box;
         height: 74px;
 
-        border-color: transparent transparent transparent #202020;
+        border-color: transparent transparent transparent transparent;
         transition: 100ms all ease;
         will-change: border-width;
         cursor: pointer;
@@ -19,6 +19,10 @@
         border-style: double;
         border-width: 0px 0 0px 60px;
       }
+
+      #button:focus {
+        outline: 0px;
+      }
   </style>
 </head>
 <body style="background-color: transparent">
@@ -29,6 +33,7 @@
     const waveColor = decodeURIComponent(urlParams.get('waveColor'));
     const progressColor = decodeURIComponent(urlParams.get('progressColor'));
     const cursorcolor = decodeURIComponent(urlParams.get('cursorColor'));
+    const buttonColor = decodeURIComponent(urlParams.get('buttonColor'));
 
       const wavesurfer = WaveSurfer.create({
           container: '#waveform',
@@ -42,6 +47,7 @@
       let playing = false;
     
       const button = document.getElementById('button');
+      button.style.borderClor = `transparent transparent transparent ${}`;
       button.addEventListener('click', () => {
         if(!playing) {
           wavesurfer.play();
