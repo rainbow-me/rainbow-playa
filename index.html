@@ -124,7 +124,7 @@
     const totalTimeLabel = document.getElementById('total-time');
     
     //Update styles
-    button.style.backgroundColor = `${bgColor && ('#' + bgColor) || 'rgba(0,0,0,.05)'}`;
+    button.style.backgroundColor = `${buttonBackground && ('#' + buttonBackground) || 'rgba(0,0,0,.05)'}`;
     document.body.style.backgroundColor = `${bgColor && ('#' + bgColor) || 'white'}`;
     buttonContent.style.borderColor = `transparent transparent transparent ${buttonColor && ('#' + buttonColor) || 'black'}`;
     currentTimeLabel.style.color = `${textColor && ('#' + textColor) || 'black'}`;
