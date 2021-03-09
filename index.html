@@ -11,6 +11,9 @@
       const urlParams = new URLSearchParams(window.location.search);
       const uri = decodeURIComponent(urlParams.get('url'));
       wavesurfer.load(uri);
+      wavesurfer.on('ready', function () {
+        wavesurfer.play();
+      });
   </script>
 </body>
 </html>
