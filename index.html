@@ -107,12 +107,14 @@
     const textColor = urlParams.get('textColor');
     const bgColor = urlParams.get('bgColor');
     const barWidth = urlParams.get('barWidth');
+    const waveformHeight = urlParams.get('waveformHeight');
     const options = {
         container: '#waveform',
         waveColor: waveColor && `#${waveColor}` || 'violet',
         progressColor: progressColor && `#${progressColor}` || 'purple',
         cursorColor: cursorColor && `#${cursorColor}` || '#fff',
         barWidth: barWidth || 10,
+        waveformHeight: waveformHeight || 120,
         closeAudioContext: true
     };
     
