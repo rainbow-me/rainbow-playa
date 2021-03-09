@@ -27,4 +27,5 @@ Params are:
 
 ### Deployments
 The player is hosted via github pages, so for changes to take effect, you need to make a PR against `gh-pages` branch.
+
 Once it's merged it should be auto-deployed 
