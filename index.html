@@ -23,11 +23,23 @@
       #button:focus {
         outline: 0px;
       }
+      
+      #button-wrapper {
+        margin: auto;
+        flex: 0;
+        display: flex;
+        padding: 30px;
+        border-radius: 30px;
+        background: rgba(0,0,0,.2);
+      }
+
   </style>
 </head>
 <body style="background-color: transparent">
   <div id="waveform"></div>
-  <button id='button' class='button'></button>
+  <div id="button-wrapper">
+    <button id='button' class='button'></button>
+  </div>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const waveColor = urlParams.get('waveColor');
