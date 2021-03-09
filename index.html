@@ -103,6 +103,7 @@
     const progressColor = urlParams.get('progressColor');
     const cursorColor = urlParams.get('cursorColor');
     const buttonColor = urlParams.get('buttonColor');
+    const textColor = urlParams.get('textColor');
     const barWidth = urlParams.get('barWidth');
     const options = {
         container: '#waveform',
@@ -136,7 +137,13 @@
 
     const button = document.getElementById('button');
     const buttonContent = document.getElementById('button-content');
+    const currentTimeLabel = document.getElementById('current-time');
+    const totalTimeLabel = document.getElementById('total-time');
+    
     buttonContent.style.borderColor = `transparent transparent transparent ${buttonColor && ('#' + buttonColor) || 'black'}`;
+    currentTimeLabel.style.color = `${textColor && ('#' + textColor) || 'black'}`;
+    totalTimeLabel.style.color = `${textColor && ('#' + textColor) || 'black'}`;
+    
     button.addEventListener('click', () => {
       if(!wavesurfer.isPlaying()) {
         wavesurfer.play();
