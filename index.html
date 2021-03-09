@@ -34,9 +34,11 @@
     const progressColor = urlParams.get('progressColor');
     const cursorColor = urlParams.get('cursorColor');
     const buttonColor = urlParams.get('buttonColor');
+    const barWidth = urlParams.get('barWidth');
 
     console.log({
       waveColor,
+      barWidth,
       progressColor,
       cursorColor,
       buttonColor,
@@ -48,7 +50,7 @@
           waveColor: waveColor && `#${waveColor}` || 'violet',
           progressColor: progressColor && `#${progressColor}` || 'purple',
           cursorColor: cursorColor && `#${cursorColor}` || '#fff',
-          barWidth: 3
+          barWidth: barWidth || 10
       });
       const uri = decodeURIComponent(urlParams.get('url'));
       wavesurfer.load(uri);
