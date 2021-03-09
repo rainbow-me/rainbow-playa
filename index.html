@@ -1,16 +1,162 @@
 <html>
-<head><script src="https://unpkg.com/wavesurfer.js"></script></head>
-<body>
+<head>
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+  <style>
+      .button-content {
+        box-sizing: border-box;
+        height: 74px;
+        border-color: transparent transparent transparent transparent;
+        transition: 100ms all ease;
+        will-change: border-width;
+        cursor: pointer;
+        border-style: solid;
+        border-width: 37px 0 37px 60px;
+        background: transparent;
+        margin-left: 30px;
+      }
+
+      .pause {
+        border-style: double;
+        border-width: 0px 0 0px 60px;
+        margin-left: 15px;
+      }
+
+      #button-content:focus {
+        outline: 0px;
+      }
+      
+      #button {
+          margin: auto;
+          flex: 0;
+          display: flex;
+          padding: 38px;
+          border-radius: 100px;
+          background: rgba(0,0,0,.05);
+          width: 120px;
+          align-items: center;
+          justify-content: center;
+          height: 120px;
+      }
+    
+      div#waveform {
+        margin-top: 300px;
+        margin-bottom: 40px;
+      }
+
+      #time span {
+        display: flex;
+        flex: 1;
+        font-size: 30px;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      }
+      #time {
+        display: flex;
+        flex: 1;
+        margin-bottom: 140px;
+      }
+      #total-time {
+        justify-content: flex-end;
+        padding-right: 5px;
+      }
+      #current-time {
+        justify-content: flex-start;
+        padding-left: 5px;
+      }
+
+  </style>
+</head>
+<body style="background-color: transparent">
   <div id="waveform"></div>
+  <div id="time">
+    <span id="current-time"></span>
+    <span id="total-time"></span>
+  </div>
+  <div id="button">
+    <button id='button-content' class='button-content'></button>
+  </div>
   <script>
-      const wavesurfer = WaveSurfer.create({
-          container: '#waveform',
-          waveColor: 'violet',
-          progressColor: 'purple'
-      });
-      const urlParams = new URLSearchParams(window.location.search);
-      const uri = decodeURIComponent(urlParams.get('url'));
-      wavesurfer.load(uri);
+    const fancyTimeFormat = (input) => {
+      try{
+        const time = Math.floor(input);
+        // Hours, minutes and seconds
+        const hrs = ~~(time / 3600);
+        const mins = ~~((time % 3600) / 60);
+        const secs = ~~time % 60;
+
+        // Output like "1:01" or "4:03:59" or "123:03:59"
+        let ret = "";
+
+        if (hrs > 0) {
+            ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+        }
+
+        ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+        ret += "" + secs;
+        console.log('ret', ret);
+        return ret;
+      } catch(e){
+        console.log(e);
+      }
+    }
+    const urlParams = new URLSearchParams(window.location.search);
+    const waveColor = urlParams.get('waveColor');
+    const progressColor = urlParams.get('progressColor');
+    const cursorColor = urlParams.get('cursorColor');
+    const buttonColor = urlParams.get('buttonColor');
+    const buttonBackground = urlParams.get('buttonBackground');
+    const textColor = urlParams.get('textColor');
+    const bgColor = urlParams.get('bgColor');
+    const barWidth = urlParams.get('barWidth');
+    const options = {
+        container: '#waveform',
+        waveColor: waveColor && `#${waveColor}` || 'violet',
+        progressColor: progressColor && `#${progressColor}` || 'purple',
+        cursorColor: cursorColor && `#${cursorColor}` || '#fff',
+        barWidth: barWidth || 10,
+        closeAudioContext: true
+    };
+    
+    console.log(options);
+    
+    const button = document.getElementById('button');
+    const buttonContent = document.getElementById('button-content');
+    const currentTimeLabel = document.getElementById('current-time');
+    const totalTimeLabel = document.getElementById('total-time');
+    
+    //Update styles
+    button.style.backgroundColor = `${buttonBackground && ('#' + buttonBackground) || 'rgba(0,0,0,.05)'}`;
+    document.body.style.backgroundColor = `${bgColor && ('#' + bgColor) || 'white'}`;
+    buttonContent.style.borderColor = `transparent transparent transparent ${buttonColor && ('#' + buttonColor) || 'black'}`;
+    currentTimeLabel.style.color = `${textColor && ('#' + textColor) || 'black'}`;
+    totalTimeLabel.style.color = `${textColor && ('#' + textColor) || 'black'}`;
+
+
+    const wavesurfer = WaveSurfer.create(options);
+    const uri = decodeURIComponent(urlParams.get('url'));
+    wavesurfer.load(uri);
+    wavesurfer.on('ready', () => {
+      console.log('ready!');
+      const duration = wavesurfer.getDuration();
+      console.log('duration', duration);
+      document.getElementById('total-time').innerText = fancyTimeFormat(duration);
+      updateCurrentTime();
+    });
+    
+    const updateCurrentTime = () => {
+      const currentTime = wavesurfer.getCurrentTime();
+      console.log('currentTime', currentTime);
+      document.getElementById('current-time').innerText = fancyTimeFormat(currentTime);
+      setTimeout(updateCurrentTime, 1000);
+    }
+    
+    button.addEventListener('click', () => {
+      if(!wavesurfer.isPlaying()) {
+        wavesurfer.play();
+      } else {
+        wavesurfer.pause();
+      }
+      buttonContent.classList.toggle('pause');
+    });
   </script>
 </body>
 </html>
