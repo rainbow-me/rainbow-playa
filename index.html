@@ -52,39 +52,34 @@
     const cursorColor = urlParams.get('cursorColor');
     const buttonColor = urlParams.get('buttonColor');
     const barWidth = urlParams.get('barWidth');
-
-    console.log({
-      waveColor,
-      barWidth,
-      progressColor,
-      cursorColor,
-      buttonColor,
-    });
-
-
-      const wavesurfer = WaveSurfer.create({
-          container: '#waveform',
-          waveColor: waveColor && `#${waveColor}` || 'violet',
-          progressColor: progressColor && `#${progressColor}` || 'purple',
-          cursorColor: cursorColor && `#${cursorColor}` || '#fff',
-          barWidth: barWidth || 10
-      });
-      const uri = decodeURIComponent(urlParams.get('url'));
-      wavesurfer.load(uri);
-      let playing = false;
+    const options = {
+        container: '#waveform',
+        waveColor: waveColor && `#${waveColor}` || 'violet',
+        progressColor: progressColor && `#${progressColor}` || 'purple',
+        cursorColor: cursorColor && `#${cursorColor}` || '#fff',
+        barWidth: barWidth || 10
+    };
     
-      const button = document.getElementById('button');
-      const buttonContent = document.getElementById('button-content');
-      buttonContent.style.borderColor = `transparent transparent transparent ${buttonColor && ('#' + buttonColor) || 'black'}`;
-      button.addEventListener('click', () => {
-        if(!playing) {
-          wavesurfer.play();
-        } else {
-          wavesurfer.pause();
-        }
-        playing = !playing;
-        buttonContent.classList.toggle('pause');
-      });
+    console.log(options);
+
+
+    const wavesurfer = WaveSurfer.create(options);
+    const uri = decodeURIComponent(urlParams.get('url'));
+    wavesurfer.load(uri);
+    let playing = false;
+
+    const button = document.getElementById('button');
+    const buttonContent = document.getElementById('button-content');
+    buttonContent.style.borderColor = `transparent transparent transparent ${buttonColor && ('#' + buttonColor) || 'black'}`;
+    button.addEventListener('click', () => {
+      if(!playing) {
+        wavesurfer.play();
+      } else {
+        wavesurfer.pause();
+      }
+      playing = !playing;
+      buttonContent.classList.toggle('pause');
+    });
   </script>
 </body>
 </html>
