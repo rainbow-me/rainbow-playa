@@ -2,6 +2,32 @@
 <head>
   <script src="https://unpkg.com/wavesurfer.js"></script>
   <style>
+    
+      div#waveform {
+        margin-top: 50px;
+        margin-bottom: 40px;
+      }
+    
+      #time span {
+        display: flex;
+        flex: 1;
+        font-size: 30px;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      }
+      #time {
+        display: flex;
+        flex: 1;
+        margin-bottom: 140px;
+      }
+      #total-time {
+        justify-content: flex-end;
+        padding-right: 5px;
+      }
+      #current-time {
+        justify-content: flex-start;
+        padding-left: 5px;
+      }
+    
       .button-content {
         box-sizing: border-box;
         height: 74px;
@@ -37,31 +63,7 @@
           justify-content: center;
           height: 120px;
       }
-    
-      div#waveform {
-        margin-top: 300px;
-        margin-bottom: 40px;
-      }
 
-      #time span {
-        display: flex;
-        flex: 1;
-        font-size: 30px;
-        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-      }
-      #time {
-        display: flex;
-        flex: 1;
-        margin-bottom: 140px;
-      }
-      #total-time {
-        justify-content: flex-end;
-        padding-right: 5px;
-      }
-      #current-time {
-        justify-content: flex-start;
-        padding-left: 5px;
-      }
 
   </style>
 </head>
@@ -114,7 +116,7 @@
         progressColor: progressColor && `#${progressColor}` || 'purple',
         cursorColor: cursorColor && `#${cursorColor}` || '#fff',
         barWidth: barWidth || 10,
-        height: waveformHeight || 120,
+        height: waveformHeight || 200,
         closeAudioContext: true
     };
         
@@ -135,7 +137,6 @@
     const uri = decodeURIComponent(urlParams.get('url'));
     wavesurfer.load(uri);
     wavesurfer.on('ready', () => {
-      console.log('ready!');
       const duration = wavesurfer.getDuration();
       document.getElementById('total-time').innerText = fancyTimeFormat(duration);
       updateCurrentTime();
