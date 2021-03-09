@@ -1,5 +1,6 @@
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
   <script src="https://unpkg.com/wavesurfer.js"></script>
   <style>
     
@@ -39,6 +40,7 @@
         border-width: 37px 0 37px 60px;
         background: transparent;
         margin-left: 30px;
+        -webkit-tap-highlight-color: transparent;
       }
 
       .pause {
@@ -136,14 +138,18 @@
     const wavesurfer = WaveSurfer.create(options);
     const uri = decodeURIComponent(urlParams.get('url'));
     wavesurfer.load(uri);
+    let duration = 0;
     wavesurfer.on('ready', () => {
-      const duration = wavesurfer.getDuration();
+      duration = wavesurfer.getDuration();
       document.getElementById('total-time').innerText = fancyTimeFormat(duration);
       updateCurrentTime();
     });
     
     const updateCurrentTime = () => {
       const currentTime = wavesurfer.getCurrentTime();
+      if(currentTime >= duration){
+        buttonContent.classList.toggle('pause');
+      }
       document.getElementById('current-time').innerText = fancyTimeFormat(currentTime);
       setTimeout(updateCurrentTime, 1000);
     }
@@ -156,6 +162,11 @@
       }
       buttonContent.classList.toggle('pause');
     });
+
+    document.addEventListener('touchmove', function (event) {
+      if (event.scale !== 1) { event.preventDefault(); }
+    }, { passive: false });
+
   </script>
 </body>
 </html>
