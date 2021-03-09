@@ -74,7 +74,8 @@
       let playing = false;
     
       const button = document.getElementById('button');
-      button.style.borderColor = `transparent transparent transparent ${buttonColor && ('#' + buttonColor) || 'black'}`;
+      const buttonContent = document.getElementById('button-content');
+      buttonContent.style.borderColor = `transparent transparent transparent ${buttonColor && ('#' + buttonColor) || 'black'}`;
       button.addEventListener('click', () => {
         if(!playing) {
           wavesurfer.play();
@@ -82,7 +83,7 @@
           wavesurfer.pause();
         }
         playing = !playing;
-        document.getElementById('button-content').classList.toggle('pause');
+        buttonContent.classList.toggle('pause');
       });
   </script>
 </body>
