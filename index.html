@@ -1,6 +1,6 @@
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5"/>
   <script src="https://unpkg.com/wavesurfer.js"></script>
   <style>
     
@@ -18,7 +18,8 @@
       #time {
         display: flex;
         flex: 1;
-        margin-bottom: 140px;
+        margin-bottom: 60px;
+        height: 35px;
       }
       #total-time {
         justify-content: flex-end;
@@ -46,6 +47,10 @@
       .pause {
         border-style: double;
         border-width: 0px 0 0px 60px;
+        margin-left: 25px;
+      }
+      
+      .pause.android {
         margin-left: 15px;
       }
 
@@ -121,6 +126,8 @@
         height: waveformHeight || 200,
         closeAudioContext: true
     };
+    
+    
         
     const button = document.getElementById('button');
     const buttonContent = document.getElementById('button-content');
@@ -133,7 +140,13 @@
     buttonContent.style.borderColor = `transparent transparent transparent ${buttonColor && ('#' + buttonColor) || 'black'}`;
     currentTimeLabel.style.color = `${textColor && ('#' + textColor) || 'black'}`;
     totalTimeLabel.style.color = `${textColor && ('#' + textColor) || 'black'}`;
-
+    
+    // Platform specfic hacks
+    const ua = navigator.userAgent.toLowerCase();
+    const isAndroid = ua.indexOf("android") > -1;
+    if (isAndroid) {
+       buttonContent.classList.toggle('android');
+    }
 
     const wavesurfer = WaveSurfer.create(options);
     const uri = decodeURIComponent(urlParams.get('url'));
