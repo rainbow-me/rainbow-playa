@@ -30,16 +30,24 @@
   <button id='button' class='button'></button>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
-    const waveColor = decodeURIComponent(urlParams.get('waveColor'));
-    const progressColor = decodeURIComponent(urlParams.get('progressColor'));
-    const cursorcolor = decodeURIComponent(urlParams.get('cursorColor'));
-    const buttonColor = decodeURIComponent(urlParams.get('buttonColor'));
+    const waveColor = urlParams.get('waveColor');
+    const progressColor = urlParams.get('progressColor');
+    const cursorcolor = urlParams.get('cursorColor');
+    const buttonColor = urlParams.get('buttonColor');
+
+    console.log({
+      waveParams,
+      progressColor,
+      cursorColor,
+      buttonColor,
+    });
+
 
       const wavesurfer = WaveSurfer.create({
           container: '#waveform',
-          waveColor: waveColor || 'violet',
-          progressColor: progressColor || 'purple',
-          cursorColor: cursorcolor || '#fff',
+          waveColor: waveColor && `#${waveColor}` || 'violet',
+          progressColor: progressColor && `#${progressColor}` || 'purple',
+          cursorColor: cursorColor && `#${cursorColor}` || '#fff',
           barWidth: 3
       });
       const uri = decodeURIComponent(urlParams.get('url'));
@@ -47,7 +55,7 @@
       let playing = false;
     
       const button = document.getElementById('button');
-      button.style.borderColor = `transparent transparent transparent ${buttonColor || '#202020'}`;
+      button.style.borderColor = `transparent transparent transparent ${buttonColor && ('#' + buttonColor) || 'black'}`;
       button.addEventListener('click', () => {
         if(!playing) {
           wavesurfer.play();
