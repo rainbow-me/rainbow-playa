@@ -2,7 +2,7 @@
 <head>
   <script src="https://unpkg.com/wavesurfer.js"></script>
   <style>
-      .button {
+      .button-content {
         box-sizing: border-box;
         height: 74px;
 
@@ -20,7 +20,7 @@
         border-width: 0px 0 0px 60px;
       }
 
-      #button:focus {
+      #button-content:focus {
         outline: 0px;
       }
       
@@ -37,8 +37,8 @@
 </head>
 <body style="background-color: transparent">
   <div id="waveform"></div>
-  <div id="button-wrapper">
-    <button id='button' class='button'></button>
+  <div id="button">
+    <button id='button-content' class='button-content'></button>
   </div>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
@@ -77,7 +77,7 @@
           wavesurfer.pause();
         }
         playing = !playing;
-        button.classList.toggle('pause');
+        document.getElementById('button-content').classList.toggle('pause');
       });
   </script>
 </body>
