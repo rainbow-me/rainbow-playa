@@ -40,17 +40,64 @@
     
       div#waveform {
         margin-top: 300px;
-        margin-bottom: 180px;
+        margin-bottom: 40px;
+      }
+
+      #time span {
+        display: flex;
+        flex: 1;
+        font-size: 30px;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      }
+      #time {
+        display: flex;
+        flex: 1;
+        margin-bottom: 140px;
+      }
+      #total-time {
+        justify-content: flex-end;
+        padding-right: 5px;
+      }
+      #current-time {
+        justify-content: flex-start;
+        padding-left: 5px;
       }
 
   </style>
 </head>
 <body style="background-color: transparent">
   <div id="waveform"></div>
+  <div id="time">
+    <span id="current-time"></span>
+    <span id="total-time"></span>
+  </div>
   <div id="button">
     <button id='button-content' class='button-content'></button>
   </div>
   <script>
+    const fancyTimeFormat = (input) => {
+      try{
+        const time = Math.floor(input);
+        // Hours, minutes and seconds
+        const hrs = ~~(time / 3600);
+        const mins = ~~((time % 3600) / 60);
+        const secs = ~~time % 60;
+
+        // Output like "1:01" or "4:03:59" or "123:03:59"
+        let ret = "";
+
+        if (hrs > 0) {
+            ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+        }
+
+        ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+        ret += "" + secs;
+        console.log('ret', ret);
+        return ret;
+      } catch(e){
+        console.log(e);
+      }
+    }
     const urlParams = new URLSearchParams(window.location.search);
     const waveColor = urlParams.get('waveColor');
     const progressColor = urlParams.get('progressColor');
@@ -72,18 +119,30 @@
     const wavesurfer = WaveSurfer.create(options);
     const uri = decodeURIComponent(urlParams.get('url'));
     wavesurfer.load(uri);
-    let playing = false;
+    wavesurfer.on('ready', () => {
+      console.log('ready!');
+      const duration = wavesurfer.getDuration();
+      console.log('duration', duration);
+      document.getElementById('total-time').innerText = fancyTimeFormat(duration);
+      updateCurrentTime();
+    });
+    
+    const updateCurrentTime = () => {
+      const currentTime = wavesurfer.getCurrentTime();
+      console.log('currentTime', currentTime);
+      document.getElementById('current-time').innerText = fancyTimeFormat(currentTime);
+      setTimeout(updateCurrentTime, 1000);
+    }
 
     const button = document.getElementById('button');
     const buttonContent = document.getElementById('button-content');
     buttonContent.style.borderColor = `transparent transparent transparent ${buttonColor && ('#' + buttonColor) || 'black'}`;
     button.addEventListener('click', () => {
-      if(!playing) {
+      if(!wavesurfer.isPlaying()) {
         wavesurfer.play();
       } else {
         wavesurfer.pause();
       }
-      playing = !playing;
       buttonContent.classList.toggle('pause');
     });
   </script>
